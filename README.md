@@ -16,18 +16,6 @@ Built for Linux development, with bundling support for Windows distribution.
 
 ⚙️ Configurable config.json (interests, thresholds, model paths)
 
-### Structure
-AutoConnect/
-├── AutoConnect_distributable/      # .exe lives here
-├── main.py                         # GUI app entry point
-├── functions/                      # Modular logic (scraping, ML, etc.)
-├── models/                         # Trained .pkl model(s)
-├── config.json                     # User-editable config
-├── manual.txt                      # Usage instructions
-├── assets/                         # Icons, splash screen
-├── dist/                           # Bundled .exe (optional)
-└── README.md
-
 
 ### 🐧 Designed for Linux — Deployable to Windows
 Developed and tested on Debian Linux
