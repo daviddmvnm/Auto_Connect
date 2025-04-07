@@ -1,0 +1,15 @@
+{
+  "max_profiles": 20,
+  "max_invites": 5,
+  "target_label": "University of Exeter",
+  "model_path": "models/logreg_model.joblib",
+  "interest_keywords": [
+    "data science",
+    "machine learning",
+    "renewables",
+    "economics",
+    "banking",
+    "basket-weaving",
+    "mongolian horse archery"
+  ]
+}

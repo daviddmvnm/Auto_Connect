@@ -1,0 +1,71 @@
+# AutoConnect Usage Guide
+
+Welcome to AutoConnect — your smart LinkedIn outreach automation tool.  
+This guide will walk you through setup, best practices, and how to stay safe on the platform.
+
+---
+
+## Quick Setup
+
+1. Launch the application.
+2. Click **Edit Config** to set your preferences:
+   - **Target Label**: The exact name of the label LinkedIn shows under “People You May Know”.
+     - Example: `"University of Toronto"` or `"Google"`
+   - **Interest Keywords**: Comma-separated keywords used to filter users.
+     - Example: `"Data Science, AI, Machine Learning"`
+   - **Model Path**: Path to your trained ML model file (e.g., `logistic_model.pkl`)
+   - **Max Profiles**: Number of profiles to scrape in one session (e.g., `500`)
+   - **Max Invites**: Number of invites to send per session (e.g., `20`)
+
+---
+
+## Step-by-Step Usage
+
+1. **Edit Config**  
+   Configure your scraping and outreach parameters.
+
+2. **Collect Data**  
+   Click **Collect Data** to scrape LinkedIn profiles that match your filters.
+
+3. **Send Invites**  
+   Click **Send Invites** to send connection requests using predictions.
+
+4. **Train Model (Optional)**  
+   Click **Train New Model** if you want to re-train or update the prediction model.
+   Make sure have a lot of data first though atleast 200+ sent invites as a baseline 
+
+---
+
+## Safety Guidelines (READ CAREFULLY)
+
+- **DO NOT** send more than ~100 invites per week.
+- Avoid scraping 1000+ profiles in one session.
+- Let the automation run in **small, random batches**.
+- Default settings are designed to be conservative.
+- Do not run 24/7 or from multiple IPs — **be human**.
+
+---
+
+## Tips for Config
+
+- `target_label` must match what you see on LinkedIn exactly.
+- `interest_keywords` help you narrow down to relevant leads.
+- You can experiment with different models by setting `model_path`.
+
+---
+
+## Files and Folders
+
+- `config.json`: Your app settings.
+- `logistic_model.pkl`: Default ML model.
+- `data/html_cache/`: Scraped profile HTML files.
+- `data/linkedin_profiles.db`: Main database.
+- `usage_guide.txt`: This file.
+- `icon.png`: Logo for the UI.
+
+---
+
+
+Good luck!
+-David
+-https://github.com/daviddmvnm

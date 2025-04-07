@@ -1,0 +1,21 @@
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore the virtual environment folder
+.venv/
+
+# Ignore the dist its too big :(
+AutoConnect_executable/
+# Ignore environment-specific files
+*.env
+*.env.local
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore the pipenv/pip install files
+Pipfile.lock
+venv/
