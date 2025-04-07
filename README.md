@@ -1,37 +1,41 @@
-# Auto_Connect
-AutoConnect is a Python-based desktop automation tool that streamlines cold LinkedIn outreach by scraping profiles, predicting acceptance likelihood using machine learning, and sending smart, human-like connection requests — all through a simple GUI.
+# 🤖 AutoConnect
 
-Built for Linux development, with bundling support for Windows distribution.
+**AutoConnect** is a Python-powered desktop automation tool that supercharges cold LinkedIn outreach.
 
-### Features
-🧩 Modular pipeline: scrape → parse → tag → predict → connect
+It scrapes profiles, predicts who’s most likely to accept a connection using a simple machine learning model, and sends smart, human-like invites — all via a clean, one-click GUI.
 
-🔍 Selenium-based scraping that mimics real user behavior
+---
 
-📊 ML model (scikit-learn) predicts which profiles are most likely to accept
+##  Features
 
-📊 Training New Models (scikit-learn) allows for retraining with more data 
+**Modular pipeline** — `scrape → parse → tag → predict → connect`  
+**Selenium scraping** that mimics real human behavior  
+**ML-powered predictions** (scikit-learn logistic model)  
+**Invite & acceptance tracking** built in  **Fully configurable** via `config.json` (interests, thresholds, model path)  
+**Train new models** easily with built-in tooling  
+**Simple GUI** (tkinter) with one-click control of the entire pipeline  
 
-📈 tracker of invites and accepted connections
+---
 
-⚙️ Configurable config.json (interests, thresholds, model paths)
+## Linux First, but Flexible
 
+- Built and tested on Ubuntu-based Linux systems
+- Bundled as a self-contained executable using PyInstaller
+- Just click or run it from terminal to launch the GUI
+- ⚠ For now, Linux only — Windows `.exe` coming later
 
-### 🐧 Designed for Linux — Deployable to Windows
-Developed and tested on Debian Linux
+---
 
-Uses PyInstaller for cross-compiling to .exe
+##  How to Use
 
-Fully standalone .exe can run on Windows machines without Python (hopefully whenever I can borrow my housemates laptop we'll find out)
+1. **Edit your targeting preferences** in `config.json`  
+2. **Launch the GUI** (click the bundled app or run `python main.py`)  
+3. **Scrape profiles** and let the bot tag + score them  
+4. **Send invites** manually or automatically  
+5. **Track results** with built-in invite/acceptance metrics  
 
+---
 
-### 📚 How to Use
-Set up your LinkedIn targeting config
+## Preview
+![image](https://github.com/user-attachments/assets/a39dd3a0-dae6-44f9-8fef-df6f47326050)
 
-Run the GUI and start scraping
-
-Let the model score and rank connection likelihood
-
-Review results or let the bot send smart invites
-
-Track which ones get accepted
