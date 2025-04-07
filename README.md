@@ -1,6 +1,6 @@
-# 🤖 AutoConnect
+#  AutoConnect
 
-**AutoConnect** is a Python-powered desktop automation tool that supercharges cold LinkedIn outreach.
+**AutoConnect** is a Python-powered desktop automation tool that looks to smartly automate cold LinkedIn outreach.
 
 It scrapes profiles, predicts who’s most likely to accept a connection using a simple machine learning model, and sends smart, human-like invites — all via a clean, one-click GUI.
 
