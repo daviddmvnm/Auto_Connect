@@ -31,7 +31,7 @@ It scrapes profiles, predicts who’s most likely to accept a connection using a
 1. **Edit your targeting preferences** in `config.json`  
 2. **Launch the GUI** (click the bundled app or run `python main.py`)  
 3. **Scrape profiles** and let the bot tag + score them  
-4. **Send invites** manually or automatically  
+4. **Send invites** automatically selects the top N profiles in terms of predicted acceptance by the ML model
 5. **Track results** with built-in invite/acceptance metrics  
 
 ---
