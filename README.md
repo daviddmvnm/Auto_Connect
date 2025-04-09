@@ -44,10 +44,15 @@ This was made for fun, education, and a bit of desperation in the job hunt.
 
 ---
 
-## Try It
-
-A standalone executable is available in the [Releases](https://github.com/daviddmvnm/Auto_Connect/releases) tab.  
-Drop it in a folder, run it, and follow the built-in tracker and config system
+## How to Try It?
+1. 
+ - A standalone executable is available in the [Releases](https://github.com/daviddmvnm/Auto_Connect/releases) tab.  
+ - Drop it in a folder
+ - navigate to the folder and run `chmod +x AutoConnectv1` to make it exectuable, if you dont do this it can't run
+ - run it, and follow the built-in tracker and config system.
+2.
+ -It will also work just by running main.py, but to do this you will have to use the requirements.txt to create an appropriate environment
+ -This will lead to some challenges for most people as the project uses an older python version 3.10.12 for libararies like undectedchromedriver to work
 
 # Preview 
 ![image](https://github.com/user-attachments/assets/ba5d6068-2c6d-4408-a46f-7cb9156ae2de)
