@@ -5,6 +5,14 @@
 This project explores behavioral patterns in online networking and turns them into a fully working ML-powered bot. It’s my first end-to-end system: scraping, feature engineering, modeling, GUI design, and bundling as a standalone executable
 
 ---
+# **Quick Disclaimer!!!**
+**Hey — I'm a student, I built this to learn and mess around with automation.
+Yes, it does technically work. Yes, it can automate parts of LinkedIn.
+No, this is not me telling you to go break LinkedIn’s Terms of Service.**
+
+Use it at your own risk. If you get banned, that’s on you.
+This was made for fun, education, and a bit of desperation in the job hunt.
+---
 
 ## Features
 
