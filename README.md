@@ -55,5 +55,6 @@ This was made for fun, education, and a bit of desperation in the job hunt.
  -This will lead to some challenges for most people as the project uses an older python version 3.10.12 for libararies like undectedchromedriver to work
 
 # Preview 
-![image](https://github.com/user-attachments/assets/b1823261-3b1d-4610-a81d-2591f09bc291)
+![image](https://github.com/user-attachments/assets/16994228-8779-4d2f-950c-1d60097589ea)
+
 
