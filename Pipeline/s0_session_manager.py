@@ -5,8 +5,8 @@ import logging
 import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from functions.human_mimic import human_sleep, human_scroll, random_hover
-from functions.utils import (
+from Pipeline.util_human_mimic import human_sleep, human_scroll, random_hover
+from Pipeline.util_paths import (
     resource_path,
     get_persistent_data_path,
     ensure_dir,

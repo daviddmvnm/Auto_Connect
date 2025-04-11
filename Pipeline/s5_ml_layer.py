@@ -5,15 +5,16 @@ import pandas as pd
 import joblib
 import logging
 
-from functions.utils import load_config, resource_path, get_persistent_data_path
+from Pipeline.util_paths import load_config, resource_path, get_persistent_data_path
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
+#the previous step in our pipeline was preprocessing.py
+#we have a db of model ready data, now just have to load and use a model
+#this class handles all that
+
 class ModelPredictor:
-    """
-    Loads a scikit-learn model and applies predictions to preprocessed LinkedIn profile data.
-    Predictions and outreach filtering are now handled entirely in the 'processed_data' table.
-    """
+   
 
     def __init__(self):
         config = load_config()
@@ -25,18 +26,15 @@ class ModelPredictor:
         self.db_path = get_persistent_data_path(db_filename)
 
         self.model = self.load_model()
-
+    
+    #loads whatever model path you give it
     def load_model(self):
-        model_path = self.model_path
+        if not os.path.exists(self.model_path):
+            raise FileNotFoundError(f"Model file not found at {self.model_path}")
 
-        if getattr(sys, 'frozen', False):
-            model_path = os.path.join(sys._MEIPASS, model_path)
+        logging.info(f"[LOAD MODEL] Loading model from: {self.model_path}")
+        return joblib.load(self.model_path)
 
-        if not os.path.exists(model_path):
-            raise FileNotFoundError(f"Model file not found at {model_path}")
-
-        logging.info(f"[LOAD MODEL] Loading model from: {model_path}")
-        return joblib.load(model_path)
 
     def fetch_unsent_profiles(self):
         try:

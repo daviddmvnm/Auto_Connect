@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
-from functions.util_paths import get_persistent_data_path, ensure_dir
+from Pipeline.util_paths import get_persistent_data_path, ensure_dir
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 

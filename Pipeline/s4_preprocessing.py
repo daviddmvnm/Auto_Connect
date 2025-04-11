@@ -8,7 +8,7 @@ import numpy as np
 import gender_guesser.detector as gender
 import sys
 import logging
-from functions.utils import get_persistent_data_path, load_config
+from Pipeline.util_paths import get_persistent_data_path, load_config
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 

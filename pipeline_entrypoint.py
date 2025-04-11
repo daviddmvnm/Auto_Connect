@@ -1,11 +1,11 @@
-from functions.utils import load_config, get_persistent_data_path
-from functions.session_manager import SessionManager
-from functions.shallow_scraper import ShallowScraper
-from functions.html_extraction import HTMLExtraction
-from functions.profile_parser import ProfileParser
-from functions.preprocessing import DataPreprocessing
-from functions.ml_layer import ModelPredictor
-from functions.outreach_eval import (
+from Pipeline.util_paths import load_config, get_persistent_data_path
+from Pipeline.s0_session_manager import SessionManager
+from Pipeline.s1_shallow_scraper import ShallowScraper
+from Pipeline.s2_html_extraction import HTMLExtraction
+from Pipeline.s3_profile_parser import ProfileParser
+from Pipeline.s4_preprocessing import DataPreprocessing
+from Pipeline.s5_ml_layer import ModelPredictor
+from Pipeline.s6_outreach_eval import (
     linkedin_outreach_from_df,
     get_all_connections,
     update_connection_accepted,
