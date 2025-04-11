@@ -56,7 +56,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='AutoConnect_dist',
+    name='AutoConnectv1',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
