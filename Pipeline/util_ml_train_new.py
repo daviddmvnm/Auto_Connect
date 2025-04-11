@@ -15,7 +15,7 @@ from Pipeline.util_paths import get_persistent_data_path, ensure_dir
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 class ModelTrainer:
-    def __init__(self, db_path="data/linkedin_profiles.db", model_subdir="models", model_type="logistic"):
+    def __init__(self, db_path="linkedin_profiles.db", model_subdir="models", model_type="logistic"):
     
         self.db_path = get_persistent_data_path(db_path)
 
@@ -83,6 +83,7 @@ class ModelTrainer:
 
     def run(self):
         """Main method to train and save a model if sufficient data is available."""
+        logging.info(f"Attempting to open DB at: {self.db_path}")
         df = self.load_training_data()
         if df.empty:
             logging.info("Not enough labeled data to train a model.")

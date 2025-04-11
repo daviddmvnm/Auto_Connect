@@ -20,8 +20,8 @@ class ModelPredictor:
         config = load_config()
 
         model_rel_path = config.get("model_path", "models/default_model.joblib")
-        self.model_path = resource_path(model_rel_path)
-
+        self.model_path = get_persistent_data_path(model_rel_path)  # this handles paths inside .autoconnect folder
+        logging.info(f"Using model path: {self.model_path}")
         db_filename = os.path.basename(config.get("db_path", "linkedin_profiles.db"))
         self.db_path = get_persistent_data_path(db_filename)
 

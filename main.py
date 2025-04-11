@@ -146,6 +146,7 @@ def open_manual():
 
 
 def start_gui():
+    
     app = tb.Window(themename="vapor")
     # Icon shown inside the GUI (e.g., splash, logo, etc.)
     gui_icon_path = resource_path("images/iconb1.png")
