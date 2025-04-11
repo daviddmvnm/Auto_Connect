@@ -10,20 +10,17 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
-from functions.utils import get_persistent_data_path, ensure_dir
+from functions.util_paths import get_persistent_data_path, ensure_dir
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 class ModelTrainer:
     def __init__(self, db_path="data/linkedin_profiles.db", model_subdir="models", model_type="logistic"):
-        """
-        Initialize ModelTrainer with a path to the SQLite DB and target model directory.
-        Ensures paths are compatible with .exe builds via utils.
-        """
+    
         self.db_path = get_persistent_data_path(db_path)
 
-        # Save models under LOCALAPPDATA/AutoConnect/models/
-        self.model_dir = os.path.join(os.environ.get("LOCALAPPDATA", "."), "AutoConnect", model_subdir)
+        self.model_dir = os.path.dirname(get_persistent_data_path(os.path.join(model_subdir, "dummy")))
+
         ensure_dir(self.model_dir)
 
         self.model_type = model_type

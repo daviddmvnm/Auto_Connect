@@ -8,11 +8,11 @@ import os
 import logging
 from PIL import Image, ImageTk
 
-from functions.outreach_eval import load_acceptance_metrics
-from functions.ml_train_new import ModelTrainer
+from Pipeline.s6_outreach_eval import load_acceptance_metrics
+from Pipeline.util_ml_train_new import ModelTrainer
 from pipeline_entrypoint import collect_and_prepare_data, send_connection_invites, refresh_connection_tracking
-from functions.utils import load_config, resource_path
-from functions.utils import resource_path
+from Pipeline.util_paths import load_config, resource_path
+from Pipeline.util_paths import resource_path
 CONFIG_PATH = resource_path("config.json")
 
 
@@ -95,7 +95,7 @@ def show_splash_popup():
     
     splash.grab_set()
     try:
-        icon_path = resource_path("iconb1.png")
+        icon_path = resource_path("images/iconb1.png")
         icon_img = ImageTk.PhotoImage(Image.open(icon_path))
         splash.iconphoto(False, icon_img)
     except Exception as e:
@@ -145,14 +145,14 @@ def open_manual():
 def start_gui():
     app = tb.Window(themename="vapor")
     # Icon shown inside the GUI (e.g., splash, logo, etc.)
-    gui_icon_path = resource_path("iconb1.png")
+    gui_icon_path = resource_path("images/iconb1.png")
     gui_icon_img = ImageTk.PhotoImage(Image.open(gui_icon_path))
     app.iconphoto(False, gui_icon_img)
 
 # Override taskbar / Alt+Tab icon if supported
     try:
         if platform.system() == "Windows":
-            taskbar_icon_path = resource_path("iconb1.ico")
+            taskbar_icon_path = resource_path("images/iconb1.ico")
             app.iconbitmap(default=taskbar_icon_path)
     except Exception as e:
         logging.warning(f"Failed to set taskbar icon: {e}")
@@ -326,7 +326,7 @@ def start_gui():
 
         # --- Logo on the left ---
         try:
-            logo_path = resource_path("iconb.png")
+            logo_path = resource_path("images/iconb.png")
             logo_img = Image.open(logo_path)
             resample = getattr(Image, 'Resampling', Image).LANCZOS
             logo_img = logo_img.resize((120, 120), resample=resample)

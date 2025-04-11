@@ -42,23 +42,30 @@ def load_config():
     raise FileNotFoundError("config.json not found in any expected location.")
 
 
-#used for verifiyng if a dir exists
-# and creating it if it doesn't
-def ensure_dir(path):
-    """
-    Ensures a persistent, writable directory (like LOCALAPPDATA/AutoConnect/data/path)
-    """
-    base_dir = os.path.join(os.environ.get("LOCALAPPDATA", "."), "AutoConnect", "data")
-    full_path = os.path.join(base_dir, path)
-    os.makedirs(full_path, exist_ok=True)
-    return full_path
 
+
+import platform
+from pathlib import Path
 
 def get_persistent_data_path(filename):
     """
-    Store app data in LOCALAPPDATA/AutoConnect/data/
-    Works safely in both dev and frozen (.exe) environments
+    Returns a writable data path for your app:
+    - Windows: %LOCALAPPDATA%\AutoConnect\data\
+    - Linux/macOS/AppImage: ~/.autoconnect/data/
     """
-    base_dir = os.path.join(os.environ.get("LOCALAPPDATA", "."), "AutoConnect", "data")
-    os.makedirs(base_dir, exist_ok=True)
-    return os.path.join(base_dir, filename)
+    if platform.system() == "Windows":
+        base_dir = Path(os.environ.get("LOCALAPPDATA", Path.home() / "AppData" / "Local"))
+    else:
+        base_dir = Path.home() / ".autoconnect"
+
+    data_dir = base_dir / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    return str(data_dir / filename)
+
+
+#used for verifiyng if a dir exists
+# and creating it if it doesn't
+def ensure_dir(path):
+    full_path = get_persistent_data_path(path)
+    os.makedirs(full_path, exist_ok=True)
+    return full_path

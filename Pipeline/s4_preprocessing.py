@@ -12,6 +12,10 @@ from functions.utils import get_persistent_data_path, load_config
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
+#the step before this was profile_parser.py
+#here we are cleaning our parsed html and making features for our model
+
+
 class DataPreprocessing:
     def __init__(self, df_raw):
         self.df_raw = df_raw.copy()
@@ -20,7 +24,9 @@ class DataPreprocessing:
 
         config = load_config()
         self.interest_keywords = config.get("interest_keywords", [])
-
+    
+    #connection count is already really clean we just have to make sure its not a string
+    #and fix for 500+ values which are binned together
     def clean_connection_count(self, val):
         if pd.isna(val):
             return np.nan
@@ -29,6 +35,7 @@ class DataPreprocessing:
             return 500.0
         match = re.search(r"(\d+)", val)
         return float(match.group(1)) if match else np.nan
+
 
     def safely_parse_list(self, val):
         if isinstance(val, str):
@@ -39,7 +46,9 @@ class DataPreprocessing:
             except Exception:
                 pass
         return []
+    
 
+    #here we create various numeric features from the extracted text info, e.g n experiences (internships, education, etc), how many keywords are in the text
     def count_experience_items(self, val):
         return len(val) if isinstance(val, list) else 0
 
@@ -48,12 +57,13 @@ class DataPreprocessing:
             text_lower = text.lower()
             return sum(kw in text_lower for kw in self.interest_keywords)
         return 0
-
+    
+    #exploratory feature looking for potential relevance of gender in acceptance rate
     def is_likely_female(self, name):
         gd = gender.Detector(case_sensitive=False)
         prediction = gd.get_gender(name)
         return 1 if prediction in ['female', 'mostly_female'] else 0
-
+    
     def merge_name_and_url_from_db(self, df):
         db_path = get_persistent_data_path("linkedin_profiles.db")
         try:
@@ -66,7 +76,8 @@ class DataPreprocessing:
         except Exception as e:
             logging.error(f"Failed to merge name/url from DB: {e}")
             return df
-
+    
+    #our base features
     def run_cleaning(self):
         df = self.df_raw.dropna(subset=["connection_count", "experiences"]).copy()
 
@@ -80,6 +91,8 @@ class DataPreprocessing:
         self.df_clean = df
         return self.df_clean
 
+    #hypothesesis tags!
+    #see blog.pdf for this explained more! it's not an awful read I promise 
     def run_tagging(self):
         if self.df_clean is None:
             raise ValueError("Must run run_cleaning() before tagging.")
@@ -107,7 +120,8 @@ class DataPreprocessing:
 
         self.df_tagged = df[cols].copy()
         return self.df_tagged
-
+    
+    #finally saving our model ready data to a db, once again using our persistent data path util functions for bundling to actually work
     def save_to_database(self, table_name="processed_data"):
         if self.df_tagged is None:
             raise ValueError("No tagged data to save. Run run_tagging() first.")
