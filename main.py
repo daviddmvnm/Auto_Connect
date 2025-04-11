@@ -1,3 +1,6 @@
+import sys
+print("PYTHONPATH:", sys.path)
+
 import ttkbootstrap as tb
 from ttkbootstrap.constants import *
 import tkinter as tk
