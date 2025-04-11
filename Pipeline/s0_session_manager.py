@@ -5,13 +5,10 @@ import logging
 import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from functions.human_mimic import human_sleep, human_scroll, random_hover
-from functions.utils import (
-    resource_path,
-    get_persistent_data_path,
-    ensure_dir,
-    load_config
-)
+from Pipeline.util_human_mimic import human_sleep, human_scroll, random_hover
+from Pipeline.util_paths import get_persistent_data_path, load_config, ensure_dir
+
+
 
 
 # This class handles the login session with LinkedIn, including loading and saving cookies,

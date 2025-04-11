@@ -19,3 +19,8 @@ Thumbs.db
 # Ignore the pipenv/pip install files
 Pipfile.lock
 venv/
+
+AC_appimage/
+
+build/
+dist/

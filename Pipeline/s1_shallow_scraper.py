@@ -10,8 +10,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from functions.human_mimic import human_sleep, random_hover
-from functions.utils import get_persistent_data_path
+from Pipeline.util_human_mimic import human_sleep, human_scroll, random_hover
+from Pipeline.util_paths import get_persistent_data_path, load_config, ensure_dir
+
 
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
