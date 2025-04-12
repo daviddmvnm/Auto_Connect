@@ -24,3 +24,11 @@ AC_appimage/
 
 build/
 dist/
+
+AppDir/
+AutoConnect-x86_64.AC_appimage
+appimagetool-x86_64.AppImage
+
+#go to releases if you want this
+#these files are too big for git 
+

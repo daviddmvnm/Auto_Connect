@@ -18,25 +18,22 @@ import pandas as pd
 
 
 def collect_and_prepare_data():
-    """
-    Runs the full data collection and ML prediction pipeline:
-    1. Scrapes shallow profile data from LinkedIn.
-    2. Extracts and saves full HTML for each profile.
-    3. Parses cached HTML to structured profile data.
-    4. Applies cleaning and tagging logic.
-    5. Feeds processed data into an ML model and populates outreach queue.
+    #this is isolating the parts of the pipeline prior to sending
+    #it will try to use configs but there are default params it will use otherwise
+
+
     
-    Compatible with both standard and frozen (.exe) environments.
-    """
     config = load_config()
     target_label = config.get("target_label", "University of Exeter")
-    max_profiles = config.get("max_profiles", 5)
+    max_profiles = config.get("max_profiles", 20)
 
+
+    # step 0 initialise the session
     session = SessionManager()
     driver = session.login()
 
     try:
-        # 1. Scrape LinkedIn profiles
+        #scrape LinkedIn profiles
         scraper = ShallowScraper(driver)
         if scraper.wait_and_open_target_tab(target_label):
             df = scraper.scroll_and_extract_profiles(max_profiles=max_profiles)
@@ -45,11 +42,11 @@ def collect_and_prepare_data():
             logging.error("[ERROR] Could not open target tab.")
             return
 
-        # 2. Extract full HTML
+        #extract full HTML
         extractor = HTMLExtraction(driver)
         extractor.run(max_profiles=max_profiles)
 
-        # 3. Parse profiles from HTML
+        #parse profiles from HTML
         parser = ProfileParser()
         html_cache = os.path.join(os.path.dirname(get_persistent_data_path("linkedin_profiles.db")), "html_cache")
         profile_ids = [
@@ -65,7 +62,7 @@ def collect_and_prepare_data():
                 parsed_profiles.append(parsed)
                 logging.info(f"[PARSED] ID {pid}: {len(parsed['experiences'])} roles, {parsed['connection_count']} connections.")
 
-        # 4. Preprocess and tag
+        #preprocess and tag
         if parsed_profiles:
             df_raw = pd.DataFrame(parsed_profiles)
             processor = DataPreprocessing(df_raw)
@@ -75,7 +72,9 @@ def collect_and_prepare_data():
         else:
             logging.warning("[SKIP] No parsed profiles to process.")
 
-        # 5. Run prediction and update outreach queue
+        #run prediction and update outreach queue
+        #outreach que is just the top n models
+
         model = ModelPredictor()
         df_predicted = model.run()
         logging.info(f"[ML] {len(df_predicted)} profiles added to database.")
@@ -84,11 +83,10 @@ def collect_and_prepare_data():
         session.close()
 
 
+#the actual outreach part 
+#if theres not a driver already it will send them out
 def send_connection_invites(driver=None):
-    """
-    Sends connection invites using provided driver.
-    If no driver is provided, a new session is started.
-    """
+  
     config = load_config()
     max_invites = config.get("max_invites", 5)
 
@@ -105,9 +103,16 @@ def send_connection_invites(driver=None):
 
 
 def refresh_connection_tracking(driver=None):
-    """
-    Refreshes the local database based on current accepted LinkedIn connections.
-    """
+    #this code refreshes the connection tracking
+    ### EDIT need to update this to something more efficient,
+    #right now this scrolls and scrapes every connection, but what would be better is this...
+
+    #scrape connections and save in a list somewhere permanenet eg in data.
+    #we load connections and instead of looking for every name everytime just see if one the newest page
+    #we have anyone not in our list? if there is scroll down until we run out of names that arent in the list
+    #this is like a million times faster than scraping every connection every time
+    #I will get round to this at some point...
+
     session = None
     if driver is None:
         session = SessionManager()

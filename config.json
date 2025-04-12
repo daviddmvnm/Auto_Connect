@@ -1,6 +1,6 @@
 {
   "max_profiles": 1,
-  "max_invites": 5,
+  "max_invites": 1,
   "target_label": "University of Exeter",
   "model_path": "",
   "interest_keywords": [
