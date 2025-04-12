@@ -45,6 +45,9 @@ This was made for fun, education, and a bit of desperation in the job hunt.
 ---
 
 ## How to Try It?
+
+0. **UPDATE:** There's now also an AppImage avaliable in releases too that's probably the easiest way to test it
+
 1. 
  - A standalone executable is available in the [Releases](https://github.com/daviddmvnm/Auto_Connect/releases) tab.  
  - Drop it in a folder
