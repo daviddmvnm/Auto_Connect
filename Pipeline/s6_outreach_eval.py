@@ -186,15 +186,35 @@ def linkedin_outreach_from_df(
         driver.quit()
         logging.info("Driver closed.")
 
-def get_all_connections(driver):
+
+#updated to save names to db, elimiantes scrolling through the whole list every time
+#early stop optimisaitn
+def get_all_connections(driver, db_filename="linkedin_profiles.db"):
+    db_path = get_persistent_data_path(db_filename)
+
+    # Load previously known connections
+    with sqlite3.connect(db_path) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS connections_known (
+                name TEXT PRIMARY KEY
+            )
+        """)
+        known_names = set(
+            row[0].strip().lower()
+            for row in conn.execute("SELECT name FROM connections_known")
+        )
+
     driver.get("https://www.linkedin.com/mynetwork/invite-connect/connections/")
     driver.set_window_size(1920, 1080)
     time.sleep(3)
 
+    new_names = []
+    seen_names = set()
     stagnant_scrolls = 0
     last_count = 0
+    stop_scroll = False
 
-    while True:
+    while not stop_scroll:
         human_scroll(driver, total_scrolls=3)
         time.sleep(2)
 
@@ -206,44 +226,77 @@ def get_all_connections(driver):
         except Exception:
             pass
 
-        # MUCH BETTER SELECTOR, previously i used one that was very brittle and subject to linkedins random changes
         name_elements = driver.find_elements(By.XPATH, "//a[contains(@href, '/in/') and string-length(text()) > 0]")
-        current_count = len(name_elements)
 
-        if current_count == last_count:
+        for el in name_elements:
+            name = el.text.strip()
+            name_clean = name.lower()
+
+            if name_clean in seen_names:
+                continue  # already handled this scroll
+
+            seen_names.add(name_clean)
+
+            if name_clean in known_names:
+                logging.info(f"[STOP] Hit known connection: {name}")
+                stop_scroll = True
+                break
+            else:
+                new_names.append(name)
+
+        if len(seen_names) == last_count:
             stagnant_scrolls += 1
-            logging.info(f"No new names loaded. Streak: {stagnant_scrolls}")
         else:
             stagnant_scrolls = 0
-            last_count = current_count
+            last_count = len(seen_names)
 
         if stagnant_scrolls >= 3:
-            logging.info("Ending scroll: reached stagnant scroll limit.")
+            logging.info("Ending scroll: stagnant scroll limit hit.")
             break
 
-    # Extract just names (strip avoids any weird whitespace)
-    names = [el.text.strip() for el in name_elements if el.text.strip()]
-    logging.info(f"Total connections found: {len(names)}")
     driver.quit()
-    return names
+    logging.info(f"[NEW] Found {len(new_names)} new connections.")
+
+    timestamp = datetime.now(timezone.utc).isoformat()
+
+    # Save new names
+    with sqlite3.connect(db_path) as conn:
+        conn.executemany(
+            "INSERT OR IGNORE INTO connections_known (name) VALUES (?)",
+            [(n.strip(),) for n in new_names]
+        )
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS connections_snapshot (
+                name TEXT,
+                snapshot_time TEXT
+            )
+        """)
+        conn.executemany(
+            "INSERT INTO connections_snapshot (name, snapshot_time) VALUES (?, ?)",
+            [(n.strip(), timestamp) for n in new_names]
+        )
+        conn.commit()
+
+    return new_names
 
 
-def update_connection_accepted(accepted_names, db_filename="linkedin_profiles.db"):
+
+
+def update_connection_accepted(new_names, db_filename="linkedin_profiles.db"):
     db_path = get_persistent_data_path(db_filename)
 
     with sqlite3.connect(db_path) as conn:
-        df_sent = pd.read_sql_query(
-            "SELECT profile_id, profile_name FROM processed_data WHERE connection_sent = 1",
-            conn
-        )
+        df_sent = pd.read_sql_query("""
+            SELECT profile_id, profile_name
+            FROM processed_data
+            WHERE connection_sent = 1 AND connection_accepted = 0
+        """, conn)
 
         df_sent["name_clean"] = df_sent["profile_name"].str.strip().str.lower()
-        accepted_clean = set(name.strip().lower() for name in accepted_names)
-        unmatched = accepted_clean - set(df_sent["name_clean"])
-        logging.info(f"Unmatched accepted names: {unmatched}")
+        new_names_clean = set(name.strip().lower() for name in new_names)
 
-        matched_ids = df_sent[df_sent["name_clean"].isin(accepted_clean)]["profile_id"].tolist()
-        logging.info(f"Matched {len(matched_ids)} accepted connections.")
+        matched_ids = df_sent[df_sent["name_clean"].isin(new_names_clean)]["profile_id"].tolist()
+        logging.info(f"[MATCHED] {len(matched_ids)} new accepted connections found.")
 
         for pid in matched_ids:
             conn.execute(
@@ -252,13 +305,7 @@ def update_connection_accepted(accepted_names, db_filename="linkedin_profiles.db
             )
         conn.commit()
 
-        df_updated = pd.read_sql_query(
-            "SELECT * FROM processed_data WHERE connection_sent = 1",
-            conn
-        )
 
-    logging.info("Connection acceptance update complete.")
-    return df_updated
 
 def load_acceptance_metrics(db_filename="linkedin_profiles.db"):
     db_path = get_persistent_data_path(db_filename)

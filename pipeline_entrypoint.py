@@ -20,6 +20,9 @@ import pandas as pd
 def collect_and_prepare_data():
     #this is isolating the parts of the pipeline prior to sending
     #it will try to use configs but there are default params it will use otherwise
+
+
+    
     config = load_config()
     target_label = config.get("target_label", "University of Exeter")
     max_profiles = config.get("max_profiles", 20)
@@ -109,7 +112,6 @@ def refresh_connection_tracking(driver=None):
     #we have anyone not in our list? if there is scroll down until we run out of names that arent in the list
     #this is like a million times faster than scraping every connection every time
     #I will get round to this at some point...
-    
 
     session = None
     if driver is None:
