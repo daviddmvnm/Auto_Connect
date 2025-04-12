@@ -6,7 +6,7 @@ import time
 import pandas as pd
 import logging
 import traceback
-
+from datetime import datetime, timezone, timedelta
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -41,6 +41,7 @@ def safe_click(driver, element, url=None, label="", retries=2):
                 raise
 
 def linkedin_outreach_from_df(
+        #add a timestamping feature
     driver=None,
     load_driver_func=None,
     max_invites=30,
@@ -82,6 +83,16 @@ def linkedin_outreach_from_df(
     processed_count = 0
     total_sent = 0
     first_visit = True
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute("PRAGMA table_info(processed_data);")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+        if "connection_sent_time" not in existing_columns:
+                cursor.execute("ALTER TABLE processed_data ADD COLUMN connection_sent_time TEXT;")
+                logging.info("[DB] Added missing column 'connection_sent_time' to processed_data.")
+        conn.commit()
+
 
     for _, row in df.iterrows():
         if total_sent >= max_invites:
@@ -138,13 +149,16 @@ def linkedin_outreach_from_df(
             except TimeoutException:
                 logging.info("Connection sent directly or modal skipped.")
 
+            timestamp = datetime.now(timezone.utc).date().isoformat()
             with sqlite3.connect(db_path) as conn:
                 conn.execute("""
-                    UPDATE processed_data
-                    SET connection_sent = 1
-                    WHERE profile_url = ?
-                """, (url,))
-                logging.info(f"[DB] Marked as sent: {url}")
+                UPDATE processed_data
+                SET connection_sent = 1,
+                connection_sent_time = ?
+                WHERE profile_url = ?
+                """, (timestamp, url))
+                logging.info(f"[DB] Marked as sent: {url} at {timestamp}")
+
 
             total_sent += 1
 
@@ -256,3 +270,22 @@ def load_acceptance_metrics(db_filename="linkedin_profiles.db"):
     rate = (accepted / sent) * 100 if sent > 0 else 0
 
     return sent, accepted, round(rate, 2)
+
+
+
+#our new feautre that tracks the number of sent connections this week so you dont do what I did on accidentally send 150+ oops
+
+def load_weekly_sent_count(db_filename="linkedin_profiles.db"):
+    db_path = get_persistent_data_path(db_filename)
+    today = datetime.now(timezone.utc).date()
+    last_monday = today - timedelta(days=today.weekday())
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT COUNT(*) FROM processed_data
+            WHERE connection_sent = 1 AND connection_sent_time >= ?
+        """, (last_monday.isoformat(),))
+        result = cursor.fetchone()[0]
+    
+    return result

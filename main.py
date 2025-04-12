@@ -11,7 +11,7 @@ import os
 import logging
 from PIL import Image, ImageTk
 
-from Pipeline.s6_outreach_eval import load_acceptance_metrics
+from Pipeline.s6_outreach_eval import load_acceptance_metrics, load_weekly_sent_count
 from Pipeline.util_ml_train_new import ModelTrainer
 from pipeline_entrypoint import collect_and_prepare_data, send_connection_invites, refresh_connection_tracking
 from Pipeline.util_paths import load_config, resource_path
@@ -178,6 +178,7 @@ def start_gui():
     total_sent = tk.StringVar(value="Total Sent: 0")
     total_accepted = tk.StringVar(value="Total Accepted: 0")
     acceptance_rate = tk.StringVar(value="Acceptance Rate: 0.00%")
+    sent_this_week = tk.StringVar(value="Sent This Week: 0")
     status_var = tk.StringVar(value="Idle...")
 
     progress = tb.Progressbar(app, bootstyle="info-striped", mode="indeterminate", length=600)
@@ -224,14 +225,18 @@ def start_gui():
     def update_stats():
         try:
             sent, accepted, rate = load_acceptance_metrics()
+            weekly = load_weekly_sent_count()
             total_sent.set(f"Total Sent: {sent}")
             total_accepted.set(f"Total Accepted: {accepted}")
             acceptance_rate.set(f"Acceptance Rate: {rate:.2f}%")
+            sent_this_week.set(f"Sent This Week: {weekly}")
         except Exception as e:
             logging.error(f"Failed to update stats: {e}")
             total_sent.set("Total Sent: -")
             total_accepted.set("Total Accepted: -")
             acceptance_rate.set("Acceptance Rate: -")
+            sent_this_week.set("Sent This Week: -")
+
     
     #config editor
     def open_config_editor():
@@ -386,6 +391,7 @@ def start_gui():
         tb.Label(stats, textvariable=total_sent).pack(anchor="w")
         tb.Label(stats, textvariable=total_accepted).pack(anchor="w")
         tb.Label(stats, textvariable=acceptance_rate).pack(anchor="w")
+        tb.Label(stats, textvariable=sent_this_week).pack(anchor="w")
         return stats
 
 
