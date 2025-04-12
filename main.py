@@ -23,8 +23,9 @@ import os
 import sys
 import platform
 
-
 #potential future development? left in here for now
+#i want to learn how to deploy to windows on a linux through docker but its breaking my brain currently
+
 def create_desktop_shortcut():
     system = platform.system()
     exe_path = sys.executable
@@ -72,6 +73,9 @@ Terminal=false
     elif system == "Darwin":  # macOS      
         pass 
 
+
+# this text logger basically just outputs whats going on in the GUI to the text box
+# I thought this would be good for some transparency so you know what the app is doing
 class TextHandler(logging.Handler):
     def __init__(self, text_widget):
         super().__init__()
@@ -87,7 +91,7 @@ class TextHandler(logging.Handler):
             self.text_widget.see(tk.END)
         self.text_widget.after(0, write)
 
-
+# this is the opening tab, that basically tells you it's not perfect and a few disclaimers
 def show_splash_popup():
     splash = tb.Toplevel()
     splash.title("Welcome to AutoConnect Prototype")
@@ -126,6 +130,7 @@ import subprocess
 import platform
 import webbrowser
 
+#open manual that comes bundled with the app
 def open_manual():
     manual_path = resource_path("manual.txt")
     if not os.path.exists(manual_path):
@@ -144,7 +149,7 @@ def open_manual():
         messagebox.showerror("Error", f"Could not open the manual:\n{e}")
 
 
-
+#starts the gui, i choose bootstrap tkinter over normal tkinter because of the added styling
 def start_gui():
     
     app = tb.Window(themename="vapor")
@@ -200,7 +205,9 @@ def start_gui():
             finally:
                 progress.stop()
         threading.Thread(target=wrapper).start()
+ 
 
+    #these are all the steps of the pipeline basially but just broken down and assigned to buttons
     def collect_data():
         run_with_loading(lambda: (collect_and_prepare_data(), update_stats()), "Collecting data...")
 
@@ -225,7 +232,8 @@ def start_gui():
             total_sent.set("Total Sent: -")
             total_accepted.set("Total Accepted: -")
             acceptance_rate.set("Acceptance Rate: -")
-
+    
+    #config editor
     def open_config_editor():
         config = load_config()
         editor = tb.Toplevel(app)
@@ -234,6 +242,7 @@ def start_gui():
         editor.resizable(False, True)  # allow vertical stretching
 
         entries = {}
+       
 
         def create_entry(label, key):
             row = tb.Frame(editor, padding=5)
@@ -248,7 +257,10 @@ def start_gui():
         create_entry("Max Invites", "max_invites")
         create_entry("Target Label", "target_label")
         create_entry("Model Path", "model_path")
+        
 
+        #below is some logic for hte keywords and such, kind of a pain espeically for a feautre
+        #that didnt really do very much, but I'm committed to uisng it now!
         keyword_frame = tb.Labelframe(editor, text="Interest Keywords", padding=10)
         keyword_frame.pack(fill="both", expand=True, padx=10, pady=5)
         keyword_list = config.get("interest_keywords", [])
@@ -325,6 +337,11 @@ def start_gui():
         log_display.delete('1.0', tk.END)
         log_display.configure(state='disabled')
 
+
+    #creates all of the buttons you can reuse styling by making a dictt as like a preset
+    #which is what i do, and then just pass it to the button
+
+    #tkinter also has this kind of grid layout thing which is pretty nice
     def create_buttons_frame_with_logo(parent):
         frame = tb.Frame(parent, padding=10)
 
@@ -341,33 +358,39 @@ def start_gui():
         except Exception as e:
             logging.warning(f"Failed to load logo: {e}")
 
-        # --- Button styles ---
+        # aforementioned Button Styles!
         button_style1 = {"bootstyle": "success-outline", "width": 16}
         button_style2 = {"bootstyle": "info-outline", "width": 16}
 
-        # --- First row of buttons ---
+        # the top row of buttons
         tb.Button(frame, text="Collect Data", command=collect_data, **button_style1).grid(row=0, column=1, padx=5, pady=3)
         tb.Button(frame, text="Send Invites", command=send_only_invites, **button_style1).grid(row=0, column=2, padx=5, pady=3)
         tb.Button(frame, text="Update Tracking", command=update_only_tracking, **button_style1).grid(row=0, column=3, padx=5, pady=3)
 
-        # --- Second row of buttons ---
+        # the second row of buttons
         tb.Button(frame, text="Open Manual", command=open_manual, **button_style2).grid(row=1, column=1, padx=5, pady=3)
         tb.Button(frame, text="Train New Model", command=train_new_model, **button_style2).grid(row=1, column=2, padx=5, pady=3)
         tb.Button(frame, text="Clear Log", command=clear_log, **button_style2).grid(row=1, column=3, padx=5, pady=3)
 
         return frame
-
+    
+    #config button 
     def create_config_button(parent):
         frame = tb.Frame(parent, padding=5)
         tb.Button(frame, text="Edit Config", command=open_config_editor, bootstyle="success-outline", width=30).pack(side=tk.LEFT)
         return frame
-
+    
+    #the space of the gui thats for our simple tracking metric
     def create_stats_frame(parent):
         stats = tb.Labelframe(parent, text="Outreach Stats", padding=10)
         tb.Label(stats, textvariable=total_sent).pack(anchor="w")
         tb.Label(stats, textvariable=total_accepted).pack(anchor="w")
         tb.Label(stats, textvariable=acceptance_rate).pack(anchor="w")
         return stats
+
+
+    #this says status bar, but its more just like a thing that moves back and forth
+    #it just lets you know in addition to the log that code is actually running and it's not just frozen
 
     def create_status_bar(parent):
         frame = tb.Frame(parent, padding=(10, 5))
@@ -386,6 +409,9 @@ def start_gui():
     show_splash_popup() 
     app.mainloop()
 
+
+#runs our glorious mainscript, trying to create a desktop shortcut (i still am not sure if this works tbh)
+#the shortcut bit hte rest of it works
 if __name__ == "__main__":
     create_desktop_shortcut()
     start_gui()
