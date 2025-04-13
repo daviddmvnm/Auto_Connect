@@ -2,7 +2,7 @@
 
 **AutoConnect** is a Python-based automation tool that helps streamline cold LinkedIn outreach. Built as a desktop prototype, it scrapes profiles, predicts who’s most likely to accept a connection request using a simple machine learning model, and sends invites — all through a clean GUI.
 
-This project explores behavioral patterns in online networking and turns them into a fully working ML-powered bot. It’s my first end-to-end system: scraping, feature engineering, modeling, GUI design, and bundling as a standalone executable
+This project explores behavioral patterns in online networking and turns them into a fully working ML-powered bot. It’s my first end-to-end system: scraping, feature engineering, modeling, GUI design, and bundling as an appimage
 
 ---
 # **Quick Disclaimer!!!**
