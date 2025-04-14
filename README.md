@@ -57,6 +57,10 @@ This was made for fun, education, and a bit of desperation in the job hunt.
  -It will also work just by running main.py, but to do this you will have to use the requirements.txt to create an appropriate environment
  -This will lead to some challenges for most people as the project uses an older python version 3.10.12 for libararies like undectedchromedriver to work
 
+### **KEY USAGE NOTE**
+Due to how LinkedIn detects headless automation and how Chrome forces itself to the foreground during scraping, minimizing or hiding the window fully is not supported in this version.
+If you don't want to see the automation in action, I recommend just switching to another Chrome tab or window — the process will continue silently in the background.
+
 # Preview 
 ![image](https://github.com/user-attachments/assets/16994228-8779-4d2f-950c-1d60097589ea)
 
