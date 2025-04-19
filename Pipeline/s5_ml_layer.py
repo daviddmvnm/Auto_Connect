@@ -16,7 +16,8 @@ class ModelPredictor:
         model_name = config.get("model_name", "default_model.joblib")
         
         # Set the path to the models folder in the persistent data directory
-        models_dir = os.path.join(get_persistent_data_path("data"), "models")
+        models_dir = get_persistent_data_path("models")
+
         self.model_path = os.path.join(models_dir, model_name)
 
         # Check if the models directory exists
