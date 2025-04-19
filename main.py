@@ -94,29 +94,41 @@ class TextHandler(logging.Handler):
 # this is the opening tab, that basically tells you it's not perfect and a few disclaimers
 def show_splash_popup():
     splash = tb.Toplevel()
-    splash.title("Welcome to AutoConnect Prototype")
-    splash.geometry("500x400")
+    splash.title("Welcome to AutoConnect")
+    splash.geometry("540x420")
     splash.resizable(False, False)
     splash.attributes("-topmost", True)
-
-    
     splash.grab_set()
+
     try:
         icon_path = resource_path("images/iconb1.png")
-        icon_img = ImageTk.PhotoImage(Image.open(icon_path))
-        splash.iconphoto(False, icon_img)
+        icon_img = ImageTk.PhotoImage(Image.open(icon_path).resize((64, 64)))
+        logo = tb.Label(splash, image=icon_img)
+        logo.image = icon_img  # keep reference
+        logo.pack(pady=(10, 5))
     except Exception as e:
-        logging.warning(f"Failed to set splash icon: {e}")
+        logging.warning(f"Failed to load splash icon: {e}")
 
-    tb.Label(splash, text="Prototype Notice", font=("Ubuntu Medium", 12, "bold")).pack(pady=(15, 5))
-    tb.Label(splash, text="This is an early prototype.\nSee the manual.txt file for usage guidance.",
-             justify="left", wraplength=350).pack(pady=5)
-    tb.Label(splash, text="a window will brielfy fullscreen when collecting data after it finds your desired tab feel free to minimise",
-             justify="left", wraplength=350).pack(pady=5)
-    tb.Label(splash, text="It's recommended to keep the tab in the background as interacting with it can disrupt the script",
-             justify="left", wraplength=350).pack(pady=5)
-    tb.Label(splash, text="this a tradeoff for better bot detection avoidance and less chance of being shadowbanned",
-             justify="left", wraplength=350).pack(pady=5)
+    tb.Label(splash, text="🚀 AutoConnect Prototype", font=("Ubuntu Medium", 14, "bold")).pack(pady=(0, 5))
+    tb.Label(splash, text="Please read the notes below before using", font=("Lato", 10)).pack()
+
+    tb.Separator(splash).pack(fill="x", padx=15, pady=10)
+
+    info = [
+        "1. This is an early prototype. See `manual.txt` for guidance.",
+        "2. The app will fullscreen briefly once during scraping — this is normal.",
+        "3. Keep the LinkedIn tab open and foregrounded while sending invites.",
+        "4. When adding a model to config, just enter the **file name** (no quotes).",
+        "5. Example: `model_path = logistic_model_2025-04-19.joblib`"
+    ]
+
+    frame = tb.Frame(splash, padding=(15, 5))
+    frame.pack(fill=BOTH, expand=True)
+
+    for line in info:
+        tb.Label(frame, text=line, wraplength=480, justify=LEFT).pack(anchor="w", pady=4)
+
+    tb.Button(splash, text="Got it", bootstyle="success", command=splash.destroy).pack(pady=15)
 
     def close_splash():
         splash.destroy()
@@ -261,7 +273,7 @@ def start_gui():
         create_entry("Max Profiles", "max_profiles")
         create_entry("Max Invites", "max_invites")
         create_entry("Target Label", "target_label")
-        create_entry("Model Path", "model_path")
+        create_entry("Model Name", "model_path")
         
 
         #below is some logic for hte keywords and such, kind of a pain espeically for a feautre

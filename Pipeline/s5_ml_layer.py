@@ -13,7 +13,7 @@ class ModelPredictor:
         config = load_config()
 
         # Get the model name from config, default to "default_model.joblib" if not specified
-        model_name = config.get("model_name", "default_model.joblib")
+        model_name = config.get("model_path", "default_model.joblib")
         
         # Set the path to the models folder in the persistent data directory
         models_dir = get_persistent_data_path("models")

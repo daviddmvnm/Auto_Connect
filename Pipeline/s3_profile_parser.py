@@ -55,6 +55,22 @@ class ProfileParser:
             logging.warning(f"Error checking if profile is already processed: {e}")
             return False
     
+    def get_unprocessed_profile_ids(self, limit=100):
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                # Select IDs from profiles table that are not yet in processed_data
+                cursor.execute("""
+                    SELECT profile_id FROM profiles
+                    WHERE profile_id NOT IN (SELECT profile_id FROM processed_data)
+                    ORDER BY profile_id ASC
+                    LIMIT ?
+                """, (limit,))
+                return [row[0] for row in cursor.fetchall()]
+        except Exception as e:
+            logging.warning(f"Error loading unprocessed profiles: {e}")
+            return []
+
     #this is a simple function to get the connection count from the html
     def get_connection_count(self, html):
         soup = BeautifulSoup(html, 'html.parser')
@@ -155,7 +171,6 @@ class ProfileParser:
     #this function is the main entry point for parsing a profile
     def parse_profile(self, profile_id):
         if self.is_already_processed(profile_id):
-            logging.info(f"[SKIP] Profile {profile_id} already processed.")
             return None
 
         html = self.load_html(profile_id)

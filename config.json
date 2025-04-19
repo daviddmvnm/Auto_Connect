@@ -1,8 +1,8 @@
 {
   "max_profiles": 1,
-  "max_invites": 1,
+  "max_invites": 10,
   "target_label": "University of Exeter",
-  "model_path": "",
+  "model_path": "logistic_model_2025-04-19_13-56-59.joblib",
   "interest_keywords": [
     "data science",
     "machine learning",

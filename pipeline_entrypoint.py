@@ -55,8 +55,11 @@ def collect_and_prepare_data():
             if f.startswith("profile_") and f.endswith(".html")
         ]
 
+
         parsed_profiles = []
-        for pid in sorted(profile_ids):
+        profile_ids = parser.get_unprocessed_profile_ids(limit=max_profiles)
+
+        for pid in profile_ids:
             parsed = parser.parse_profile(pid)
             if parsed:
                 parsed_profiles.append(parsed)
