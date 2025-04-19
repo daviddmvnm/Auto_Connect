@@ -1,67 +1,86 @@
-# **AutoConnect prototype**
+# AutoConnect – ML-Powered LinkedIn Outreach Tool
 
-**AutoConnect** is a Python-based automation tool that helps streamline cold LinkedIn outreach. Built as a desktop prototype, it scrapes profiles, predicts who’s most likely to accept a connection request using a simple machine learning model, and sends invites — all through a clean GUI.
+**AutoConnect** is a Python-based desktop tool for automating cold LinkedIn outreach.
 
-This project explores behavioral patterns in online networking and turns them into a fully working ML-powered bot. It’s my first end-to-end system: scraping, feature engineering, modeling, GUI design, and bundling as an appimage
+It scrapes profiles, predicts who’s most likely to accept a connection using a basic ML model, and sends invites — all controlled through a simple GUI.
+
+This is an end-to-end prototype: scraping, feature engineering, modeling, automation, GUI, and bundling as a Linux AppImage.
 
 ---
-# **Quick Disclaimer!!!**
-**Hey — I'm a student, I built this to learn and mess around with automation.
-Yes, it does technically work. Yes, it can automate parts of LinkedIn.
-No, this is not me telling you to go break LinkedIn’s Terms of Service.**
 
-Use it at your own risk. If you get banned, that’s on you.
-This was made for fun, education, and a bit of desperation in the job hunt.
+## ⚠️ Disclaimer
+
+This tool automates LinkedIn activity.  
+Use at your own risk.  
+It likely violates LinkedIn’s Terms of Service.  
+I built this for learning purposes only — not as a production tool.
+
 ---
 
 ## Features
 
-- Scrape LinkedIn profiles via undetected browser automation
-- Parse and extract structured data from raw HTML
-- Engineer hypothesis-based features
-- Train or load a logistic regression model to predict acceptance likelihood
-- Send automated connection requests to top-ranked profiles
-- Track invites, responses, and acceptance rates
-- Control scraping and outreach from a tkinter GUI
+- Persistent sessions using cookie extraction  
+- Undetected scraping of LinkedIn profiles  
+- HTML parsing and feature extraction  
+- Hypothesis-based feature engineering  
+- Logistic regression model to predict connection acceptance  
+- Auto-send connection requests to top-ranked profiles  
+- Invite tracking and acceptance rate logging  
+- Simple GUI built with `tkinter`  
 
 ---
 
-## Technologies Used
+## Tech Stack
 
-- Python (Selenium, BeautifulSoup, scikit-learn, tkinter)
-- Undetected ChromeDriver for stealth automation
-- SQLite for persistent tracking
-- PyInstaller for bundling into a standalone app
-
----
-
-## Notes
-
-- The bundled version is Linux-only for now (tested on Ubuntu 22.04)
-- Requires an initial login and then saves your li_at cookie to be injected until it expires
-- All behavior is partially randomised and human-like to avoid detection
-- This prototype was built as part of an assignment for a uni datascience module
+- Python (Selenium, BeautifulSoup, Scikit-learn, Tkinter)  
+- Undetected ChromeDriver  
+- SQLite for storage  
+- PyInstaller to bundle as `.AppImage`  
 
 ---
 
-## How to Try It?
+## Install (Linux Only)
 
-0. **UPDATE:** There's now also an AppImage avaliable in releases too that's probably the easiest way to test it
+Tested on Ubuntu 22.04.
 
-1. 
- - A standalone executable is available in the [Releases](https://github.com/daviddmvnm/Auto_Connect/releases) tab.  
- - Drop it in a folder
- - navigate to the folder and run `chmod +x AutoConnectv1` to make it exectuable, if you dont do this it can't run
- - run it, and follow the built-in tracker and config system.
-2.
- -It will also work just by running main.py, but to do this you will have to use the requirements.txt to create an appropriate environment
- -This will lead to some challenges for most people as the project uses an older python version 3.10.12 for libararies like undectedchromedriver to work
+### 1. Download the AppImage
 
-### **KEY USAGE NOTE**
-Due to how LinkedIn detects headless automation and how Chrome forces itself to the foreground during scraping, minimizing or hiding the window fully is not supported in this version.
-If you don't want to see the automation in action, I recommend just switching to another Chrome tab or window — the process will continue silently in the background.
+- [Download from GitHub Releases](https://github.com/daviddmvnm/Auto_Connect/releases/tag/v0.1.1%28APP-IMAGE%29)  
+or use:
+```bash
+curl -L -o AutoConnect.AppImage https://github.com/daviddmvnm/Auto_Connect/releases/download/v0.1.1%28APP-IMAGE%29/AutoConnect-x86_64.AppImage
+```
+or
+```bash
+wget https://github.com/daviddmvnm/Auto_Connect/releases/download/v0.1.1%28APP-IMAGE%29/AutoConnect-x86_64.AppImage -O AutoConnect.AppImage
+```
 
-# Preview 
+### 2. Make it executable
+```bash
+chmod +x AutoConnect.AppImage
+```
+
+### 3. Run it
+```bash
+./AutoConnect.AppImage
+```
+Or just double-click.
+
+---
+
+## More Info
+
+I wrote about how I built this here:  
+[Build Notes – Google Doc](https://docs.google.com/document/d/1a6fNa6ATkD4cw9ORhz8tiGCtCSGLhGDziHp_gkv7sYc/edit?tab=t.khzo1efbhjtw)
+
+---
+
+## GUI Preview
+
 ![image](https://github.com/user-attachments/assets/16994228-8779-4d2f-950c-1d60097589ea)
 
+---
 
+## Contact
+
+If you want to give feedback, ask questions, or collab, open an issue or message me directly.
