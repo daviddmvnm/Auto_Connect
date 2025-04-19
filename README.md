@@ -1,4 +1,4 @@
-# 🕸️AutoConnect – ML-Powered LinkedIn Outreach Tool🕸️
+# 🕸AutoConnect – ML-Powered LinkedIn Outreach Tool
 
 **AutoConnect** is a Python-based desktop tool for automating cold LinkedIn outreach.
 
