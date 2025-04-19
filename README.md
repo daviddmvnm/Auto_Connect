@@ -1,10 +1,13 @@
-# AutoConnect – ML-Powered LinkedIn Outreach Tool
+# 🕸️AutoConnect – ML-Powered LinkedIn Outreach Tool🕸️
 
 **AutoConnect** is a Python-based desktop tool for automating cold LinkedIn outreach.
 
 It scrapes profiles, predicts who’s most likely to accept a connection using a basic ML model, and sends invites — all controlled through a simple GUI.
 
 This is an end-to-end prototype: scraping, feature engineering, modeling, automation, GUI, and bundling as a Linux AppImage.
+
+> It's my first project like this — leaving behind Jupyter notebooks and gluing everything together into a real, working app.  
+> It's not perfect, but the core functionality works. Consider this a rough MVP, so enjoy? 
 
 ---
 
@@ -39,7 +42,7 @@ I built this for learning purposes only — not as a production tool.
 
 ---
 
-## Install (Linux Only)
+## Install (Linux Only 🐧)
 
 Tested on Ubuntu 22.04.
 
@@ -81,6 +84,6 @@ I wrote about how I built this here:
 
 ---
 
-## Contact
+## Contact 👋
 
-If you want to give feedback, ask questions, or collab, open an issue or message me directly.
+If you want to give feedback, ask questions, etc, message me directly I'm up for a chat 
