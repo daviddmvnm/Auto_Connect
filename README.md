@@ -50,10 +50,7 @@ Tested on Ubuntu 22.04.
 
 - [Download from GitHub Releases](https://github.com/daviddmvnm/Auto_Connect/releases/tag/v0.1.1%28APP-IMAGE%29)  
 or use:
-```bash
-curl -L -o AutoConnect.AppImage https://github.com/daviddmvnm/Auto_Connect/releases/download/v0.1.1%28APP-IMAGE%29/AutoConnect-x86_64.AppImage
-```
-or
+
 ```bash
 wget https://github.com/daviddmvnm/Auto_Connect/releases/download/v0.1.1%28APP-IMAGE%29/AutoConnect-x86_64.AppImage -O AutoConnect.AppImage
 ```
