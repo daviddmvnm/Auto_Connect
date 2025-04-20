@@ -66,6 +66,11 @@ chmod +x AutoConnect.AppImage
 ```
 Or just double-click.
 
+
+### Uninstalling
+```bash
+rm AutoConnect.AppImage
+```
 ---
 
 ## More Info
