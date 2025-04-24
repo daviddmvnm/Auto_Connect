@@ -87,7 +87,7 @@ rm AutoConnect.AppImage
 ## 📄 **More Info**
 
 📝 I wrote about how I built this here:  
-[**Build Notes – Google Doc**](https://docs.google.com/document/d/1a6fNa6ATkD4cw9ORhz8tiGCtCSGLhGDziHp_gkv7sYc/edit?tab=t.khzo1efbhjtw)
+[**Build Notes – Google Doc**](https://docs.google.com/document/d/15pBLOmaXcsLjkpP-OE33zfwmCYpWrEhTrZ1tFP6JGuo/edit?tab=t.khzo1efbhjtw#heading=h.p9jatc3v45hz)
 
 ---
 
