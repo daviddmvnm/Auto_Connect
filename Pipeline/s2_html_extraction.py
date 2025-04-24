@@ -64,17 +64,17 @@ class HTMLExtraction:
         try:
             self.driver.get(url)
 
-            human_sleep(3, 7)
+            human_sleep(3, 15)
             human_scroll(self.driver, total_scrolls=random.randint(2, 5))
             if random.random() < 0.3:
-                time.sleep(random.uniform(1, 3))
-                human_scroll(self.driver, total_scrolls=random.randint(1, 3))
+                time.sleep(random.uniform(1, 10))
+                human_scroll(self.driver, total_scrolls=random.randint(1, 5))
 
             random_hover(self.driver, "section")
             
-            if random.random() < 0.15:
+            if random.random() < 0.2:
                 take_linkedin_detour(self.driver)
-                human_sleep(random.uniform(5, 15))
+                human_sleep(random.uniform(10, 20))
 
             if random.random() < 0.4:
                 random_hover(self.driver, random.choice(["h1", "h2", "section", "img"]))
