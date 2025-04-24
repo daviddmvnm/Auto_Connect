@@ -64,11 +64,24 @@ class HTMLExtraction:
         try:
             self.driver.get(url)
 
-            human_sleep(3, 1)
-            human_scroll(self.driver, total_scrolls=random.randint(1, 2))
+            human_sleep(3, 7)
+            human_scroll(self.driver, total_scrolls=random.randint(2, 5))
+            if random.random() < 0.3:
+                time.sleep(random.uniform(1, 3))
+                human_scroll(self.driver, total_scrolls=random.randint(1, 3))
+
             random_hover(self.driver, "section")
+            
+            if random.random() < 0.15:
+                take_linkedin_detour(self.driver)
+                human_sleep(random.uniform(5, 15))
+
+            if random.random() < 0.4:
+                random_hover(self.driver, random.choice(["h1", "h2", "section", "img"]))
+                human_sleep(random.uniform(0.5, 2))
 
             html = self.driver.page_source
+
             with open(filepath, "w", encoding="utf-8") as f:
                 f.write(html)
 
