@@ -6,7 +6,9 @@ It scrapes profiles, predicts who’s most likely to accept a connection using a
 
 This is a full end-to-end prototype: scraping, feature engineering, modeling, automation, GUI, and bundling as a Linux AppImage.
 
-> 🛠️ *My first project like this — leaving behind Jupyter notebooks and gluing everything together into a real, working app. It's not perfect, but the core functionality works. Consider this a rough MVP, so enjoy?*
+>*🛠️ My first project like this | leaving behind Jupyter notebooks and gluing everything together into a real, working app. It's not perfect, but the core functionality works. Consider this a rough MVP, so enjoy?*
+
+ >*🎯 This was my capstone after 6 months of making a serious effort to learn data science | not just models, but the full stack: scraping, feature engineering, automation, and deployment as a real tool any feedback is massively appreciated.*
 
 ---
 
