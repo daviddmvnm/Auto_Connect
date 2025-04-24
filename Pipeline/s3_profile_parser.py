@@ -59,13 +59,30 @@ class ProfileParser:
         try:
             with sqlite3.connect(self.db_path) as conn:
                 cursor = conn.cursor()
-                # Select IDs from profiles table that are not yet in processed_data
+
+                # ✅ First check if processed_data exists:
                 cursor.execute("""
-                    SELECT profile_id FROM profiles
-                    WHERE profile_id NOT IN (SELECT profile_id FROM processed_data)
-                    ORDER BY profile_id ASC
-                    LIMIT ?
-                """, (limit,))
+                    SELECT name FROM sqlite_master 
+                    WHERE type='table' AND name='processed_data'
+                """)
+                table_exists = cursor.fetchone() is not None
+
+                if table_exists:
+                    # If processed_data exists → run the full query
+                    cursor.execute("""
+                        SELECT profile_id FROM profiles
+                        WHERE profile_id NOT IN (SELECT profile_id FROM processed_data)
+                        ORDER BY profile_id ASC
+                        LIMIT ?
+                    """, (limit,))
+                else:
+                    # If processed_data does not exist → grab all profile IDs
+                    cursor.execute("""
+                        SELECT profile_id FROM profiles
+                        ORDER BY profile_id ASC
+                        LIMIT ?
+                    """, (limit,))
+
                 return [row[0] for row in cursor.fetchall()]
         except Exception as e:
             logging.warning(f"Error loading unprocessed profiles: {e}")
