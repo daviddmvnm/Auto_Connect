@@ -125,4 +125,4 @@ rm AutoConnect.AppImage
 
 If you want to give feedback, ask questions, or just chat — feel free to reach out!
 
-Also add me on linkedin... [**LinkedIn**](https://www.linkedin.com/in/david-clements442/)
+Also add me on linkedin... [**LinkedIn 😎**](https://www.linkedin.com/in/david-clements442/)
