@@ -30,30 +30,30 @@ class ProfileParser:
         with open(path, "r", encoding="utf-8") as f:
             return f.read()
     
-    #checks if the profile has already been processed by mathcing profile ids to the cache
     def is_already_processed(self, profile_id):
-
-        #does the db exsits?
         if not os.path.exists(self.db_path):
-            return False
+            return False  # No DB at all, so definitely not processed
+
         try:
             with sqlite3.connect(self.db_path) as conn:
-
-                #does the table exist?
                 cursor = conn.cursor()
+
+            # Check if the table exists FIRST
                 cursor.execute("""
                     SELECT name FROM sqlite_master 
                     WHERE type='table' AND name='processed_data'
                 """)
                 if cursor.fetchone() is None:
+                    # Table doesn't exist yet → so nothing can be processed yet
                     return False
-                
-                #does the id already exist in our table?
+
+                # Only run this if table exists:
                 cursor.execute("SELECT 1 FROM processed_data WHERE profile_id = ?", (profile_id,))
-                return cursor.fetchone() is not None #true if we already parsed it
+                return cursor.fetchone() is not None
         except Exception as e:
             logging.warning(f"Error checking if profile is already processed: {e}")
             return False
+
     
     def get_unprocessed_profile_ids(self, limit=100):
         try:
