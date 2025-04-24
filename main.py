@@ -16,7 +16,9 @@ from Pipeline.util_ml_train_new import ModelTrainer
 from pipeline_entrypoint import collect_and_prepare_data, send_connection_invites, refresh_connection_tracking
 from Pipeline.util_paths import load_config, resource_path
 from Pipeline.util_paths import resource_path
-CONFIG_PATH = resource_path("config.json")
+from Pipeline.util_paths import get_persistent_data_path
+
+CONFIG_PATH = get_persistent_data_path("config.json")
 
 
 import os
