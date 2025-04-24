@@ -21,6 +21,30 @@ I built this purely for learning purposes — **not for production use.**
 
 ---
 
+## 📂 **Project Structure**
+
+```
+AutoConnect/
+├── Pipeline/               # Core logic: scraping, parsing, feature engineering, ML model training
+├── images/                 # GUI assets (icons, logos)
+├── models/                 # Saved ML models (e.g., logistic_model.joblib)
+├── .gitignore              # Git tracking rules (ignores cache, compiled files, etc.)
+├── AutoConnect.spec        # PyInstaller spec file for building the AppImage
+├── README.md               # Project overview, install instructions, usage guide
+├── blog_build story.pdf    # Data-driven blog write-up (submitted for the empirical project)
+├── config.json             # Editable configuration file (max invites, model choice, interest keywords)
+├── main.py                 # GUI launcher and main app entry point
+├── manual.txt              # User manual included with the app
+├── pipeline_entrypoint.py  # Command-line entry point for triggering pipeline stages without the GUI
+├── requirements.txt        # Python package dependencies for development and reproducibility
+```
+
+✅ **Notes on Key Files:**
+- **`main.py`**: The main executable Python script that launches the GUI.
+- **`pipeline_entrypoint.py`**: Allows running the scraping, parsing, and model prediction pipeline outside the GUI.
+- **`config.json`**: Controls bot behavior (invite limits, keywords, model selection). Now uses a persistent user-writable config system.
+- **`AutoConnect.spec`**: Defines how the app is bundled into a portable Linux binary using PyInstaller
+
 ## 🚀 **Features**
 
 ✅ Persistent sessions using cookie extraction  
