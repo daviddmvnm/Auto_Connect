@@ -4,7 +4,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 
 
-def human_sleep(base=2, variance=1):
+def human_sleep(base=5, variance=2):
     delay = max(0, random.uniform(base - variance, base + variance))
     time.sleep(delay)
 
