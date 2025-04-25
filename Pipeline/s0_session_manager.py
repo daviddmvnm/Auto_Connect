@@ -79,7 +79,6 @@ class SessionManager:
         except Exception as e:
             logging.error(f"Failed to save cookies: {e}")
 
-    #loads cookies from the file
     def _load_cookies(self):
         if not os.path.exists(self.cookie_path):
             logging.warning(f"Cookie file not found at {self.cookie_path}")
@@ -95,8 +94,11 @@ class SessionManager:
                         self.driver.add_cookie(cookie)
                     except Exception as e:
                         logging.debug(f"Failed to load a cookie: {e}")
+            # Debug: check loaded cookies
+            logging.info(f"Cookies currently in driver: {self.driver.get_cookies()}")
         except Exception as e:
             logging.error(f"Failed to load cookies: {e}")
+
 
     #login function, either you manual login or if they are still valid, default to cookies
     def _wait_for_login(self, timeout=120):
