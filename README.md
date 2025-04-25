@@ -34,7 +34,7 @@ AutoConnect/
 ├── config.json             # Editable configuration file (max invites, model choice, interest keywords)
 ├── main.py                 # GUI launcher and main app entry point
 ├── manual.txt              # User manual included with the app
-├── pipeline_entrypoint.py  # Command-line entry point for triggering pipeline stages without the GUI
+├── pipeline_entrypoint.py  # Pipeline functions chained together for use in main
 ├── requirements.txt        # Python package dependencies for development and reproducibility
 ```
 
