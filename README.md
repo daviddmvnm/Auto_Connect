@@ -76,7 +76,7 @@ Tested on **Ubuntu 22.04**.
 _or use `wget`:_
 
 ```bash
-wget "https://github.com/daviddmvnm/Auto_Connect/releases/download/v0.1.1%28APP-IMAGE%29/AutoConnect.x86_64.AppImage" -O AutoConnect.AppImage
+wget https://github.com/daviddmvnm/Auto_Connect/releases/download/v0.1.1%28APP-IMAGE%29/AutoConnect-x86_64.AppImage -O AutoConnect.AppImage
 ```
 
 ---
