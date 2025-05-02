@@ -1,3 +1,8 @@
+# **UPDATE - THEY GOT ME 💔** 
+*My account got permad I think... granted this was after some aggressive usage, probably wouldn't reccomned using this, so consider this more of a historical artifact of my first attempts at scraping, bot evasion and automation.*
+*I will likely be back again in a few months under a new account with some smarter evasion features for round 2 with LinkedIn*
+
+
 # 🕸️ **AutoConnect – ML-Powered Outreach Tool**
 
 **AutoConnect** is a Python-based desktop app for automating cold LinkedIn outreach.
@@ -124,4 +129,4 @@ rm AutoConnect.AppImage
 
 If you want to give feedback, ask questions, or just chat — feel free to reach out!
 
-Also add me on linkedin... [**LinkedIn 😎**](https://www.linkedin.com/in/david-clements442/)
+
