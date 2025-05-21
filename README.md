@@ -1,6 +1,3 @@
-# **UPDATE - THEY GOT ME 💔** 
-*My account got permad I think... granted this was after some aggressive usage, probably wouldn't reccomned using this, so consider this more of a historical artifact of my first attempts at scraping, bot evasion and automation.*
-*I will likely be back again in a few months under a new account with some smarter evasion features for round 2 with LinkedIn, mainly being much smarter about leaving human-like click trail*
 
 
 # 🕸️ **AutoConnect – ML-Powered Outreach Tool**
